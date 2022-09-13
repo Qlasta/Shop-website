@@ -1,0 +1,60 @@
+{% include 'header.html' %}
+
+
+
+<!--Alerts-->
+   {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+         <div class="alert alert-info" role="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+<!--      Log in -->
+
+
+<div class="container-fluid">
+<main class="login-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Prisijungti</div>
+                    <div class="card-body">
+                        <form action="{{ url_for('login') }} " method="POST">
+                            <div class="form-group row">
+                                <label  class="col-md-4 col-form-label text-md-right">El. pašto adresas</label>
+                                <div class="col-md-6">
+                                {{ login.email(class_= "form-control", type="text", id="email_address") }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right">Slaptažodis</label>
+                                <div class="col-md-6">
+                                     {{ login.password(class_= "form-control", id="password", type="password") }}
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-outline-dark login-buttons">
+                                    Prisijungti
+                                </button>
+
+                                <a href="{{ url_for('register') }}" class="btn btn-link">
+                                    Neturite paskyros? Užsiregistruokite.
+                                </a>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+</main>
+
+        <!-- Footer-->
+{% include 'footer.html' %}

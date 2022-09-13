@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% import "bootstrap/wtf.html" as wtf %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Tiesiai iš daržo</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+           <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand brand-logo" href="{{ url_for('index') }}">Tiesiai iš daržo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Pradžia</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Apie</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mano paskyra</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ url_for('register') }}">Registruotis</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="{{ url_for('login') }}">Prisijungti</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Atsijungti</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex" method="get" action="{{ url_for('cart') }}">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi bi-basket-fill me-1"></i>
+                            Mano krepšys
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_items_q }}</span>
+                        </button>
+                    </form>
+                    {% if current_user.is_authenticated %}
+
+                    {% if current_user.id in (1,2) %}
+                     <form class="d-flex" method="get" action="{{ url_for('admin_manager') }}">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="me-1">🛂</i>
+                            Admin
+
+                        </button>
+                    </form>
+                    <form class="d-flex" method="get" action="{{ url_for('orders') }}">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi bi-file-earmark-check-fill me-1"></i>
+                            Užsakymai
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ orders_q }}</span>
+                        </button>
+                    </form>
+                    {% else %}
+                    <span> {{ current_user.email }}</span>
+
+                    {% endif %}
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-my-image py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Tiesiai iš daržo</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Uogos, vaisiai ir daržovės, naminių vištų kiaušiniai.</p>
+                </div>
+            </div>
+        </header>

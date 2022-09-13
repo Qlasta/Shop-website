@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+        <!-- Section-->
+        {% if current_user.id in (1,2) %}
+<section id="content">
+
+
+
+
+								<!-- Box #2 -->
+									<section class="py-5">
+                                        <div class="d-flex justify-content-center">
+										<header>
+											<h2 class="page-header">Ūkininko langas</h2>
+											<p class="page-header">Čia galima pridėti ir redaguoti parduotuvėje rodomas gėrybes</p>
+
+										</header>
+                                            </div>
+                                        <div class="container">
+										<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">Pavadinimas</th>
+      <th scope="col">Aprašymas</th>
+      <th scope="col">Nuotraukos nuoroda</th>
+	  <th scope="col">Kaina už vnt.</th>
+		<th scope="col">Mato vnt.</th>
+		<th scope="col">Kiekis sandėlyje</th>
+		<th scope="col">Rodyti parduotuvėje</th>
+		<th scope="col">Redaguoti</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+
+      <th scope="row"><b>{{ item.name }}</b></th>
+      <td>{{ item.description }}</td>
+        <td><a href="{{item.picture_link}}">Nuotrauka</a></td>
+      <td>{{ item.price }}</td>
+        <td>{{ item.units }}</td>
+	  <td>{{ item.in_stock_amount }}</td>
+
+	         {% if item.available: %}
+		  <td>✔</td>
+		  {% else: %}
+		  <td>🚫</td>
+		  {% endif %}
+        <td><a href="{{ url_for('edit_goods_item', item_id=item.id) }}"><button class="btn btn-outline-dark">Redaguoti</button></a></td>
+
+
+    </tr>
+
+{% endfor %}
+  </tbody>
+
+</table>
+
+                                        <div>
+
+                               <a href="{{ url_for('add_goods_item') }}"><button class="btn btn-outline-dark">Kurti naują prekę</button></a>
+                                        </div>
+                                            </div>
+									</section>
+
+            {% else%}
+
+        <h2>Prieiga negalima.</h2>
+
+        {% endif %}
+        <!-- Footer-->
+{% include 'footer.html' %}

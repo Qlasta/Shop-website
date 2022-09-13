@@ -1,0 +1,76 @@
+{% include 'header.html' %}
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container">
+                {% if logged_in %}
+                {% if not cart_empty %}
+                <div class="container">
+
+
+                    <table class="table">
+                         <thead>
+    <tr>
+      <th scope="col">Eil. nr</th>
+      <th scope="col">Prekė</th>
+      <th scope="col">Kaina</th>
+      <th scope="col">Kiekis</th>
+        <th scope="col">Suma</th>
+    </tr>
+  </thead>
+                        <tbody>
+                        {% for item_cart, item in cart_items.items() %}
+                        <tr>
+                        <th scope="row">1</th>
+                         <td>{{ item.name }}</td>
+                        <td>{{ item.price }} eur/ {{ item.units }}</td>
+    <td>
+                             <form class="form-inline" method="post">
+
+                                 {{ form.id(type="hidden", value=item_cart.id) }}
+                                 {{ form.item_id(type="hidden", value=item.id) }}
+     {{ form.quantity(class_ = "form-control-sm quantity-input", value=item_cart.quantity) }}
+                                     <span class="button-count"> {{form.save(class_="btn btn-sm btn-outline-dark", value="Perskaičiuoti")}}</span>
+
+                     </form>
+        </td>
+
+                        <td>{{ "{:.2f}".format(item_cart.total_sum) }} eur.</td>
+                            <td><a class="delete-icon" data-toggle="tooltip" data-placement="top" data-container="body" title="Pašalinti" href="{{url_for('cart_delete', item_cart_id=item_cart.id) }}">✘</a></td>
+</tr>
+
+                        {% endfor %}
+<tr>
+      <th scope="row" colspan="4">Viso mokėti:</th>
+      <td><b>{{ to_pay }} eur.</b></td>
+    </tr>
+                        </tbody>
+                    </table>
+
+                    </div>
+
+<div class="d-flex justify-content-center">
+                <form action="{{ url_for('create_checkout_session') }}" method="POST">
+
+                        <button class="btn btn-dark" id="checkout-button" type="submit">
+                            <i class="bi bi-currency-euro me-1"></i>
+                            Apmokėti
+
+                        </button>
+                    </form>
+            </div>
+
+
+
+{% else %}
+                    <p> Jūsų krepšys tuščias.</p>
+                    {% endif %}
+                {% else %}
+                   <p> Kad matytumėte savo krepšį, turite prisijungti. </p>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </section>
+        <!-- Footer-->
+{% include 'footer.html' %}

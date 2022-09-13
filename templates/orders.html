@@ -1,0 +1,77 @@
+{% include 'header.html' %}
+        <!-- Section-->
+        {% if current_user.id in (1,2) %}
+<section id="content">
+
+
+
+
+								<!-- Box #2 -->
+									<section class="py-5">
+                                        <div class="d-flex justify-content-center">
+										<header>
+											<h2 class="page-header">Administratoriaus langas</h2>
+											<p class="page-header">Čia galima matyti apmokėtus užsakymus ir pažymėti užsakymus sutvarkytais</p>
+
+										</header>
+                                            </div>
+                                        <div class="container">
+										<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">Užsakymo ID</th>
+      <th scope="col">Vartotojas</th>
+      <th scope="col">Užsakymo suma</th>
+	  <th scope="col">Užsakytos prekės ir kiekiai</th>
+		<th scope="col">Sutvarkyta</th>
+		<th scope="col">Pažymėti kaip sutvarkytą</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for order, items in active_orders_info.items() %}
+    <tr>
+
+      <th scope="row">{{ order.id }}</th>
+      <td>{{ order.user.email }}</td>
+        <td> {{ order.order_sum }} eur.</td>
+      <td>
+          <ul class="list-group" >
+          {% for item in items %}
+
+          <il class="list-item"> {{ item.item.name }} - {{ item.quantity }} po {{ item.item.units}} </il>
+            {% endfor %}
+              </ul>
+      </td>
+
+
+	         {% if order.finished: %}
+		  <td>✔</td>
+		  {% else: %}
+		  <td>🚫</td>
+		  {% endif %}
+        <td><a href="{{ url_for('order_finished', order_id=order.id) }}"><button class="btn btn-outline-dark">Sutvarkyti</button></a></td>
+
+
+    </tr>
+
+{% endfor %}
+  </tbody>
+
+</table>
+
+                                        <div>
+
+                               <a href="{{ url_for('add_goods_item') }}"><button class="btn btn-outline-dark">Rodyti ataskaitą</button></a>
+                                        </div>
+                                            </div>
+									</section>
+
+            {% else%}
+
+        <h2>Prieiga negalima.</h2>
+
+        {% endif %}
+        <!-- Footer-->
+{% include 'footer.html' %}

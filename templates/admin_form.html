@@ -1,0 +1,28 @@
+{% include 'header.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+        <!-- Section-->
+        {% if current_user.id in (1,2) %}
+        <section class="py-5">
+            <div class="d-flex justify-content-center">
+            <header>
+											{% if new_item: %}
+											<h2 class="page-header" >Pridėti naują prekę</h2>
+
+											{% else:%}
+											<h2 class="page-header" >Redaguoti prekės informaciją</h2>
+
+											{% endif %}
+										</header>
+            </div>
+            <div class="container px-4 px-lg-5 mt-5">
+{{ wtf.quick_form(form, button_map = {"save":"outline-dark"},  novalidate=True)}}
+            </div>
+        </section>
+
+        {% else%}
+
+        <h2>Prieiga negalima.</h2>
+
+        {% endif %}
+        <!-- Footer-->
+{% include 'footer.html' %}
